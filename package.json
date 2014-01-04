@@ -1,0 +1,17 @@
+{
+  "name": "canvas_experiment",
+  "version": "0.1.0",
+  "description": "Test the performance and features of HTML 5 Canvas",
+  "main": "server.js",
+  "dependencies": {
+    "sprintf-js": "~0.0.7"
+  },
+  "devDependencies": {
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Phil Thompson",
+  "license": "BSD-2-Clause"
+}
