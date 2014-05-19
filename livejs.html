@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Live JS - Result!</title>
+  <style type="text/css">
+    body { margin: 0; padding: 0; overflow: hidden; }
+    div#resultarea {
+      float: left;
+      width: 49%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    textarea#codearea {
+      float: right;
+      width: 49%;
+      margin: 0;
+      padding: 0;
+      color: #acc;
+      background: #333;
+      font-family: Consolas 'courier new';
+      font-size: 18px;
+      padding: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div id='resultarea'></div>
+  <textarea id='codearea'></textarea>
+  <script>
+    var left,
+        right,
+        id,
+        code,
+        oldCode,
+        header,
+        style;
+
+    left = document.getElementById('resultarea');
+    right = document.getElementById('codearea');
+
+    left.style.height = right.style.height = window.innerHeight + 'px';
+
+    style = window.getComputedStyle(left);
+
+    header = " \
+      var resultarea, canvas;\
+      resultarea = document.getElementById('resultarea');\
+      canvas = document.createElement('canvas');\
+      canvas.width = " + parseInt(style.width) + ";\
+      canvas.height = " + parseInt(style.height) + ";\
+      if(resultarea.childElementCount) {resultarea.children[0].remove();}\
+      resultarea.appendChild(canvas);\
+    ";
+
+    var codeRunner = function codeRunner() {
+      if(id) { clearTimeout(id); }
+      id = setTimeout(function() {
+        code = right.value;
+        localStorage['code'] = code;
+        if(code != oldCode) {
+          console.clear();
+          try {
+            eval(header + code);
+          } catch(error) {
+            console.error(error);
+          }
+          old_code = code;
+        }
+      }, 500);
+    };
+
+    var keyHandler = function keyHandler() {
+
+    };
+
+    document.addEventListener('input', codeRunner);
+    document.addEventListener('input', keyHandler);
+    document.addEventListener('paste', codeRunner);
+    document.addEventListener('cut', codeRunner);
+
+    right.focus();
+    right.value = localStorage['code'] || "var c = canvas.getContext('2d');\n\n";
+    //codeRunner();
+  </script>
+</body>
+</html>
